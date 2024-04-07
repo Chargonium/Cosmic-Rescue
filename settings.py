@@ -8,11 +8,3 @@ ANIMATION_SPEED = 6
 Z_LAYERS = {
 
 }
-
-MAP = [
-    "x x x",
-    " x x ",
-    "     ",
-    "     ",
-    "xxxxx"
-]
