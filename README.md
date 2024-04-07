@@ -12,9 +12,9 @@ A small game im working on, not gonna be a big game, just a small game.
 
 ### TODO
 
-[x] Map loading
-[x] Movement
-[ ] Collisions
-[ ] Quests
-[ ] Planets
-[ ] (simple) NPC's
+- [x] Map loading
+- [x] Movement
+- [ ] Collisions
+- [ ] Quests
+- [ ] Planets
+- [ ] (simple) NPC's
