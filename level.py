@@ -1,6 +1,6 @@
 from settings import *
 from sprites import Sprite
-
+from player import Player
 
 class Level:
     def __init__(self, tmx_map) -> None:
@@ -15,6 +15,11 @@ class Level:
         for x, y, surf in tmx_map.get_layer_by_name('Terrain').tiles():
             Sprite((x*TILE_SIZE,y*TILE_SIZE), surf, self.all_sprites)
 
-    def run(self):
+        for obj in tmx_map.get_layer_by_name('Objects'):
+            if obj.name == 'player':
+                Player((obj.x, obj.y), self.all_sprites)
+
+    def run(self, deltaTime):
+        self.all_sprites.update(deltaTime)
         self.display_surface.fill('grey')
         self.all_sprites.draw(self.display_surface)

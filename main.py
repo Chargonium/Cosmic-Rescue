@@ -8,17 +8,17 @@ class Game:
         pygame.init()
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption("Cosmic Rescue!")
+        self.clock = pygame.time.Clock()
 
         self.tmx_maps = [load_pygame(join('.', 'data', 'levels', 'omni.tmx'))]
 
         self.currentStage = Level(self.tmx_maps[0])
 
-    def __runAll(self):
-        self.currentStage.run()
 
     def run(self):
         while True:
-            self.__runAll()
+            deltaTime = self.clock.tick(240) / 1000
+            self.currentStage.run(deltaTime)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
