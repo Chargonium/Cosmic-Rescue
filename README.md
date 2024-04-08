@@ -14,7 +14,8 @@ A small game im working on, not gonna be a big game, just a small game.
 
 - [x] Map loading
 - [x] Movement
-- [ ] Collisions
+- [x] Collisions
+- [ ] Proper file structure
 - [ ] Quests
 - [ ] Planets
 - [ ] (simple) NPC's

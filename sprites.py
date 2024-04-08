@@ -6,3 +6,4 @@ class Sprite(pygame.sprite.Sprite):
         self.image = pygame.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill('black')
         self.rect = self.image.get_frect(topleft=pos)
+        self.oldRect = self.rect.copy()
