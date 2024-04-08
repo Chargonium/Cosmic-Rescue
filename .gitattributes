@@ -1,0 +1,5 @@
+*.py=true
+data/=true
+graphics/=true
+README.md=true
+LICENSE=true
