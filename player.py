@@ -1,7 +1,7 @@
 from settings import *
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collisionSprites) -> None:
+    def __init__(self, pos, groups, collisionSprites):
         super().__init__(groups)
         self.image = pygame.Surface((48, 56))
         self.image.fill('red')
@@ -13,11 +13,16 @@ class Player(pygame.sprite.Sprite):
         # Movement
         self.direction = Vector(0, 0)
         self.speed = 400
+        self.hyperspeedMaxModifier = 16000
+        self.hyperspeedModifier = 0
+        self.hyperspeedChargeRateModifier=4000
 
         # Collision
         self.collisionSprites = collisionSprites
 
-    def input(self):
+        #return self
+
+    def input(self, deltaTime):
         keys = pygame.key.get_pressed()
         input_vector = Vector(0,0)
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
@@ -32,13 +37,27 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             input_vector.y -= 1
 
+        hyperspeedChargeRate = (self.hyperspeedMaxModifier - self.hyperspeedModifier) / self.hyperspeedMaxModifier
+
+        if keys[pygame.K_LSHIFT]:
+            self.hyperspeedModifier += (hyperspeedChargeRate*self.hyperspeedChargeRateModifier)*deltaTime
+        else:
+            self.hyperspeedModifier -= ((1-hyperspeedChargeRate)*self.hyperspeedChargeRateModifier)*deltaTime
+
+        if self.hyperspeedModifier > self.hyperspeedMaxModifier:
+            self.hyperspeedModifier = self.hyperspeedMaxModifier
+        if self.hyperspeedModifier < 0:
+            self.hyperspeedModifier = 0
+
+        #print(self.hyperspeedModifier)
+
         self.direction = input_vector.normalize() if input_vector else input_vector
 
     def move(self, deltaTime):
-        self.rect.x += self.direction.x * self.speed * deltaTime
+        self.rect.x += self.direction.x * (self.speed + self.hyperspeedModifier) * deltaTime
         self.collision('horizontal')
 
-        self.rect.y += self.direction.y * self.speed * deltaTime
+        self.rect.y += self.direction.y * (self.speed + self.hyperspeedModifier) * deltaTime
         self.collision('vertical')
 
     def collision(self, axis):
@@ -62,5 +81,5 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, deltaTime):
         self.oldRect = self.rect.copy()
-        self.input()
+        self.input(deltaTime)
         self.move(deltaTime)
