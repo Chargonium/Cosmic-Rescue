@@ -1,6 +1,6 @@
 # Comsic rescue.
 
-A small game im working on, not gonna be a big game, just a small game.
+Just gonna a be a small ish game im planning on finishing.
 
 ## Installation instructions.
 
@@ -15,6 +15,7 @@ A small game im working on, not gonna be a big game, just a small game.
 - [x] Map loading
 - [x] Movement
 - [x] Collisions
+- [ ] black holes
 - [ ] Proper file structure
 - [ ] Quests
 - [ ] Planets

@@ -22,12 +22,22 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit()
+                    return False
+                    
+
+            if pygame.key.get_pressed()[pygame.K_r]:
+                return True
 
             pygame.display.update()
 
 if __name__ == "__main__":
-    game = Game()
-    game.run()
+    run = True
+    while run:
+        game = Game()
+        run = game.run()
+
+    print("Exiting now!")
+    sys.exit()
+    
 else:
     print("no, fuck off.")

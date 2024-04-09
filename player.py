@@ -4,7 +4,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collisionSprites):
         super().__init__(groups)
         self.image = pygame.Surface((48, 56))
-        self.image.fill('red')
+        self.image.fill('green')
 
         # Rects
         self.rect = self.image.get_frect(topleft=pos)
@@ -12,6 +12,8 @@ class Player(pygame.sprite.Sprite):
         
         # Movement
         self.direction = Vector(0, 0)
+        self.velocity = Vector(0, 0)
+        self.drag = Vector(1, 1)
         self.speed = 400
         self.hyperspeedMaxModifier = 16000
         self.hyperspeedModifier = 0
@@ -54,15 +56,18 @@ class Player(pygame.sprite.Sprite):
         self.direction = input_vector.normalize() if input_vector else input_vector
 
     def move(self, deltaTime):
-        self.rect.x += self.direction.x * (self.speed + self.hyperspeedModifier) * deltaTime
-        self.collision('horizontal')
+        self.rect.x += (self.direction.x + self.velocity.x) * (self.speed + self.hyperspeedModifier) * deltaTime
+        self.collision('horizontal', deltaTime)
 
-        self.rect.y += self.direction.y * (self.speed + self.hyperspeedModifier) * deltaTime
-        self.collision('vertical')
+        self.rect.y += (self.direction.y + self.velocity.y) * (self.speed + self.hyperspeedModifier) * deltaTime
+        self.collision('vertical', deltaTime)
 
-    def collision(self, axis):
+    def collision(self, axis, deltaTime):
         for sprite in self.collisionSprites:
             if sprite.rect.colliderect(self.rect):
+                if (self.hyperspeedModifier+self.speed) > 2000:
+                    self.image.fill('red')
+                self.hyperspeedModifier -= (self.hyperspeedChargeRateModifier*2) * deltaTime
                 if axis == 'horizontal':
                     # left
                     if self.rect.left <= sprite.rect.right and self.oldRect.left >= sprite.oldRect.right:
