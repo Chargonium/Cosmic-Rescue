@@ -15,7 +15,7 @@ Just gonna a be a small ish game im planning on finishing.
 - [x] Map loading
 - [x] Movement
 - [x] Collisions
-- [ ] black holes
+- [x] black holes
 - [ ] Proper file structure
 - [ ] Quests
 - [ ] Planets

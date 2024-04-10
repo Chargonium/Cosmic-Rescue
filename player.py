@@ -55,12 +55,18 @@ class Player(pygame.sprite.Sprite):
 
         self.direction = input_vector.normalize() if input_vector else input_vector
 
+    def calculateDrag(self, speed):
+        return (speed/6**2)
+
     def move(self, deltaTime):
-        self.rect.x += (self.direction.x + self.velocity.x) * (self.speed + self.hyperspeedModifier) * deltaTime
+        self.rect.x += (self.direction.x * (self.speed + self.hyperspeedModifier) + self.velocity.x) * deltaTime
         self.collision('horizontal', deltaTime)
 
-        self.rect.y += (self.direction.y + self.velocity.y) * (self.speed + self.hyperspeedModifier) * deltaTime
+        self.rect.y += (self.direction.y * (self.speed + self.hyperspeedModifier) + self.velocity.y) * deltaTime
         self.collision('vertical', deltaTime)
+
+        self.velocity.x -= self.calculateDrag(self.velocity.x)
+        self.velocity.y -= self.calculateDrag(self.velocity.y)
 
     def collision(self, axis, deltaTime):
         for sprite in self.collisionSprites:

@@ -7,6 +7,9 @@ class meter(pygame.sprite.Sprite):
         self.rect = self.image.get_frect(topleft=(pos[0]+TILE_SIZE/4, pos[1]))
     
     def update(self, sizePercentage):
+        if sizePercentage > 100:
+            print("Corrected a size percentage error!")
+            sizePercentage = 100
         self.image = pygame.Surface((TILE_SIZE/2, 64-sizePercentage*0.64))
         self.image.fill('red')
 
