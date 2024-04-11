@@ -1,8 +1,8 @@
 from settings import *
-from sprites import Sprite
-from player import Player
+from Objects.sprites import Sprite
+from Objects.player import Player
 from GUI import HyperspeedMeter
-from blackHole import blackHole
+from Objects.blackHole import blackHole
 
 class Level:
     def __init__(self, tmx_map) -> None:
